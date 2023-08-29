@@ -1,5 +1,5 @@
 @echo off
-set "version=v1.1.5 (beta)"
+set "version=v1.1.6 (beta)"
 set "author=snoopti"
 set "updateURL=https://snoopti.de/download/snooptiTools.bat"
 
@@ -130,6 +130,9 @@ goto :menu
 cls
 echo.
 echo ---------- CHANGELOG ----------
+echo.
+echo ----- v1.0.6
+echo + sourcecode link added
 echo.
 echo ----- v1.0.5
 echo changed version updater method
