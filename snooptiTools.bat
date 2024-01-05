@@ -1,20 +1,20 @@
 @echo off
-set "version=v1.1.6 (beta)"
+set "version=v1.0.7 (beta)"
 set "author=snoopti"
 set "updateURL=https://snoopti.de/download/snooptiTools.bat"
 
 title snooptiTools - %version% - by %author%
 
-:: Admin-Check
+:checkAdmin
+::----------------- Admin-Check
 net session >nul 2>&1
-if %errorLevel% == 0 (
-    goto :menu
-) else (
-    goto :runAsAdmin
+if %errorLevel% NEQ 0 (
+    echo Running in Administrator mode...
+    powershell -command "Start-Process '%~0' -Verb RunAs"
+    exit /b
 )
-:: ----------
 
-:: Menu
+::----------------- Menu
 :menu
 cls
 echo.
@@ -30,30 +30,20 @@ echo [!] Exit
 echo.
 set /p choice=Insert option: 
 
-if "%choice%"=="1" (
-    goto :op-updater
-) else if "%choice%"=="2" (
-    goto :op-calculator
-) else if "%choice%"=="#" (
-    goto :updateversion
-) else if "%choice%"=="?" (
-    goto :sourcecode
-) else if "%choice%"=="-" ( 
-    goto :changelog
-) else if "%choice%"=="!" (
-    exit
-) else (
-    cls
-    echo Invalid choice. Please select a valid option.
-    timeout /t 2 >nul
-    goto :menu
-)
-:: ----------
+if "%choice%"=="1" goto tool-updater
+if "%choice%"=="2" goto tool-calculator
+if "%choice%"=="#" goto updateversion
+if "%choice%"=="?" goto sourcecode
+if "%choice%"=="-" goto changelog
+if "%choice%"=="!" exit /b
 
-:: ------------------------------------ OPTIONS
+cls
+echo Invalid choice. Please select a valid option.
+timeout /t 2 >nul
+goto menu
 
-:: option1 - WingetUpdater
-:op-updater
+::----------------- WingetUpdater
+:tool-updater
 cls
 echo.
 echo ---------- UPDATER ----------
@@ -69,11 +59,10 @@ winget upgrade --all --include-unknown
 
 echo Update process complete.
 timeout /t 10 >nul
-goto :menu
-:: ----------
+goto menu
 
-:: Option2 - Calculator
-:op-calculator
+::----------------- Calculator
+:tool-calculator
 cls
 echo.
 echo ---------- CALCULATOR ----------
@@ -84,13 +73,9 @@ echo.
 for /f "delims=" %%a in ('powershell -command "write-host (%expression%)"') do set "result=%%a"
 echo Result: %result%
 pause >nul
-goto :op-calculator
-:: ----------
+goto op-calculator
 
-:: ------------------------------------
-:: ------------------------------------ SYSTEM
-
-:: UPDATE LATEST VERSION
+::----------------- VersionUpdate
 :updateversion
 cls
 echo.
@@ -106,30 +91,22 @@ echo Latest version of snooptiTools.bat successfully downloaded.
 echo please wait..
 echo.
 timeout /t 3 >nul
-exit
-:: ----------
+exit /b
 
-:: RunAsAdmin
-:runAsAdmin
-cls
-echo Running in Administrator mode...
-powershell -command "Start-Process '%~0' -Verb RunAs"
-exit
-:: ----------
-
+::----------------- Sourcecode
 :sourcecode
 cls
-echo.
-echo github.com/snoopti/snooptiTools will be open in 3 seconds
-timeout /t 3 >nul
 start https://github.com/snoopti/snooptiTools
-goto :menu
+goto menu
 
-:: Changelog
+::----------------- Changelog
 :changelog 
 cls
 echo.
 echo ---------- CHANGELOG ----------
+echo.
+echo ----- v1.0.7
+echo + optimization
 echo.
 echo ----- v1.0.6
 echo + sourcecode link added
@@ -155,7 +132,4 @@ echo ----- v1.0.0
 echo Beta Release
 echo.
 pause
-goto :menu
-:: ----------
-
-:: ------------------------------------
+goto menu
