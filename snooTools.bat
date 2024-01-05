@@ -26,9 +26,8 @@ echo [1] Winget Updater
 echo [2] Calculator
 echo [3] File Downloader
 echo.
-echo [#] Download latest version
-echo [?] Sourcecode (github)
-echo [-] Changelog
+echo [#] Update Version
+echo [?] Sourcecode
 echo [!] Exit
 echo.
 set /p choice=Insert option: 
