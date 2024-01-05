@@ -1,9 +1,11 @@
 @echo off
-set "version=⚡ v1.0.7"
+set "version=v1.0.7"
 set "author=snoopti"
-set "updateURL=https://raw.githubusercontent.com/snoopti/snooptiTools/main/snooptiTools.bat"
+set "updateURL=https://raw.githubusercontent.com/snoopti/snooTools/main/snooTools.bat"
+set "sourceCode=https://github.com/snoopti/snooTools"
+set "name=snooTools"
 
-title snooptiTools - %version% - by %author%
+title %name% - %version% - by %author%
 
 :checkAdmin
 ::----------------- Admin-Check
@@ -18,7 +20,7 @@ if %errorLevel% NEQ 0 (
 :menu
 cls
 echo.
-echo ---------- SNOOPTI-TOOLS %version% ----------
+echo ---------- %name% %version% ----------
 echo.
 echo [1] Winget Updater
 echo [2] Calculator
@@ -85,18 +87,13 @@ timeout /t 2 >nul
 curl -o temp.bat %updateURL%
 timeout /t 1 >nul
 move /y temp.bat "%~0"
-cls
-echo.
-echo Latest version of snooptiTools.bat successfully downloaded.
-echo please wait..
-echo.
 timeout /t 3 >nul
 exit /b
 
 ::----------------- Sourcecode
 :sourcecode
 cls
-start https://github.com/snoopti/snooptiTools
+start %sourceCode%
 goto menu
 
 ::----------------- Changelog
@@ -107,6 +104,8 @@ echo ---------- CHANGELOG ----------
 echo.
 echo ----- v1.0.7
 echo + optimization
+echo + name changed
+echo + changed updatelink
 echo.
 echo ----- v1.0.6
 echo + sourcecode link added
