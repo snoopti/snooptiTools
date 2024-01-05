@@ -24,7 +24,7 @@ echo ---------- %name% %version% ----------
 echo.
 echo [1] Winget Updater
 echo [2] Calculator
-echo [3] File Downloader
+echo [2] Webhook
 echo.
 echo [#] Update Version
 echo [?] Sourcecode
@@ -34,7 +34,8 @@ set /p choice=Insert option:
 
 if "%choice%"=="1" goto tool-updater
 if "%choice%"=="2" goto tool-calculator
-if "%choice%"=="3" goto file-downloader
+if "%choice%"=="3" goto tool-webhook
+
 if "%choice%"=="#" goto updateversion
 if "%choice%"=="?" goto sourcecode
 if "%choice%"=="-" goto changelog
@@ -50,7 +51,7 @@ goto menu
 :updateversion
 cls
 echo.
-echo Downloading from %updateURL%
+echo Downloading newest Version
 echo.
 timeout /t 2 >nul
 curl -o temp.bat %updateURL%
@@ -65,7 +66,6 @@ cls
 start %sourceCode%
 goto menu
 
-
 ::---------------------------------- TOOLS ----------------------------------
 ::----------------- WingetUpdater
 :tool-updater
@@ -74,7 +74,7 @@ echo.
 echo ---------- UPDATER ----------
 echo.
 echo Update process starting...
-echo ! please refrain from any actions during the process
+echo.
 timeout /t 5 >nul
 cls
 
@@ -100,21 +100,22 @@ echo Result: %result%
 pause >nul
 goto op-calculator
 
-
-::----------------- File Downloader
-:file-downloader
+::----------------- Webhook
+:tool-webhook
 cls
 echo.
-echo ---------- FILE DOWNLOADER ----------
+echo ---------- WEBHOOK ----------
 echo.
-set /p "fileURL=Enter file URL to download: "
-set /p "destination=Enter destination path to save the file: "
+echo Type "exit" to enter the menu
+echo.
+set "webhookURL="
+set /p webhookURL="Webhook URL: "
+if "%webhookURL%"=="exit" goto menu
 
-echo.
-echo Downloading file from %fileURL%...
-timeout /t 2 >nul
-curl -o "%destination%" %fileURL%
-timeout /t 1 >nul
-echo Download complete.
-timeout /t 3 >nul
+set /p message="Message: "
+
+powershell -Command "(New-Object Net.WebClient).UploadString('%webhookURL%', '{\"content\":\"%message%\"}')"
+
+echo Nachricht wurde gesendet.
+pause
 goto menu
