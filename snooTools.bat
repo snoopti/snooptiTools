@@ -24,7 +24,6 @@ echo ---------- %name% %version% ----------
 echo.
 echo [1] Winget Updater
 echo [2] Calculator
-echo [2] Webhook
 echo.
 echo [#] Update Version
 echo [?] Sourcecode
@@ -34,7 +33,6 @@ set /p choice=Insert option:
 
 if "%choice%"=="1" goto tool-updater
 if "%choice%"=="2" goto tool-calculator
-if "%choice%"=="3" goto tool-webhook
 
 if "%choice%"=="#" goto updateversion
 if "%choice%"=="?" goto sourcecode
@@ -99,23 +97,3 @@ for /f "delims=" %%a in ('powershell -command "write-host (%expression%)"') do s
 echo Result: %result%
 pause >nul
 goto op-calculator
-
-::----------------- Webhook
-:tool-webhook
-cls
-echo.
-echo ---------- WEBHOOK ----------
-echo.
-echo Type "exit" to enter the menu
-echo.
-set "webhookURL="
-set /p webhookURL="Webhook URL: "
-if "%webhookURL%"=="exit" goto menu
-
-set /p message="Message: "
-
-powershell -Command "(New-Object Net.WebClient).UploadString('%webhookURL%', '{\"content\":\"%message%\"}')"
-
-echo Nachricht wurde gesendet.
-pause
-goto menu
