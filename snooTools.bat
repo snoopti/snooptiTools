@@ -24,7 +24,6 @@ echo ---------- %name% %version% ----------
 echo.
 echo [1] Winget Updater
 echo [2] Calculator
-echo [3] Image Converter
 echo.
 echo [#] Update Version
 echo [?] Sourcecode
@@ -34,7 +33,6 @@ set /p choice=Insert option:
 
 if "%choice%"=="1" goto tool-updater
 if "%choice%"=="2" goto tool-calculator
-if "%choice%"=="3" goto tool-image-converter
 
 if "%choice%"=="#" goto updateversion
 if "%choice%"=="?" goto sourcecode
@@ -99,26 +97,3 @@ for /f "delims=" %%a in ('powershell -command "write-host (%expression%)"') do s
 echo Result: %result%
 pause >nul
 goto op-calculator
-
-::----------------- Image Converter
-:tool-image-converter
-cls
-echo.
-echo ---------- IMAGE CONVERTER ----------
-echo Type "exit" to leave
-if "%choice%"=="exit" goto menu
-echo.
-set /p "imagePath=Input File (C:\path\to\image.png): "
-echo.
-set /p "outputFormat=Format (jpg, png...): "
-echo.
-
-if exist "%imagePath%" (
-    magick "%imagePath%" "%outputFormat%:%imagePath%.%outputFormat%"
-    echo Image converted successfully!
-) else (
-    echo The specified file does not exist.
-)
-
-pause >nul
-goto tool-image-converter
