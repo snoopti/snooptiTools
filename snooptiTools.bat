@@ -1,7 +1,7 @@
 @echo off
 set "version=v1.0.7 (beta)"
 set "author=snoopti"
-set "updateURL=https://snoopti.de/download/snooptiTools.bat"
+set "updateURL=https://raw.githubusercontent.com/snoopti/snooptiTools/main/snooptiTools.bat"
 
 title snooptiTools - %version% - by %author%
 
