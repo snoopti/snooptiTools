@@ -115,7 +115,7 @@ cls
 echo [1] Cleaning Temporary Files
 call :cleanFolder "C:\Users\%USERNAME%\AppData\Local\Temp"
 
-echo [2] Cleaning Temporary Files
+echo [2] Cleaning Windows Temporary Files
 call :cleanFolder "C:\Windows\Temp"
 
 echo [3] Cleaning Chrome Service Worker Cache
