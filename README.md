@@ -2,6 +2,9 @@
 Multitool with some nice features
 
 # Changelog
+----- v1.0.8
+- Added Cleaner tool
+- 
 ----- v1.0.7
 - optimization
 - name changed
